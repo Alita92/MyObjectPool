@@ -35,7 +35,12 @@ public:
     {
         if (_cur_usage_index != 0)
         {
-
+            for (int index = 0; index < _cur_usage_index; ++index)
+            {
+                unsigned int tmp_address = reinterpret_cast<unsigned int>(_mem_list[0]) + sizeof(T) * index;
+                T* delete_object = reinterpret_cast<T*>(tmp_address);
+                delete_object->~T();
+            }
         }
 
         for (auto mem : _mem_list)
