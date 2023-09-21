@@ -1,2 +1,16 @@
 ﻿  JWObjectPool.cpp
+C:\Users\James Park\Desktop\Study\JWObjectPool\JWObjectPool\JWObjectPool.cpp(140,24): warning C4477: 'printf' : 서식 문자열 '%d'에 'int' 형식의 인수가 필요하지만 variadic 인수 1의 형식이 'unsigned __int64'입니다.
+C:\Users\James Park\Desktop\Study\JWObjectPool\JWObjectPool\JWObjectPool.cpp(140,24): message : 서식 문자열에서 '%zd'을(를) 사용하는 것이 좋습니다.
+C:\Users\James Park\Desktop\Study\JWObjectPool\JWObjectPool\JWObjectPool.cpp(150,28): warning C4477: 'printf' : 서식 문자열 '%d'에 'int' 형식의 인수가 필요하지만 variadic 인수 1의 형식이 'unsigned __int64'입니다.
+C:\Users\James Park\Desktop\Study\JWObjectPool\JWObjectPool\JWObjectPool.cpp(150,28): message : 서식 문자열에서 '%zd'을(를) 사용하는 것이 좋습니다.
+C:\Users\James Park\Desktop\Study\JWObjectPool\JWObjectPool\JWObjectPool.cpp(55,1): warning C4311: 'reinterpret_cast': 'void *'에서 'unsigned int'(으)로 포인터가 잘립니다.
+C:\Users\James Park\Desktop\Study\JWObjectPool\JWObjectPool\JWObjectPool.cpp(50): message : 클래스 템플릿 멤버 함수 'void JWObjectPool<CharacterData>::MakeBlock(void)'을(를) 컴파일하는 중입니다.
+C:\Users\James Park\Desktop\Study\JWObjectPool\JWObjectPool\JWObjectPool.cpp(68): message : 컴파일되는 함수 템플릿 인스턴스화 'void JWObjectPool<CharacterData>::MakeBlock(void)'에 대한 참조를 확인하세요.
+C:\Users\James Park\Desktop\Study\JWObjectPool\JWObjectPool\JWObjectPool.cpp(113): message : 컴파일되는 클래스 템플릿 인스턴스화 'JWObjectPool<CharacterData>'에 대한 참조를 확인하세요.
+C:\Users\James Park\Desktop\Study\JWObjectPool\JWObjectPool\JWObjectPool.cpp(55,1): warning C4302: 'reinterpret_cast': 'void *'에서 'unsigned int'(으)로 잘립니다.
+C:\Users\James Park\Desktop\Study\JWObjectPool\JWObjectPool\JWObjectPool.cpp(56,1): warning C4312: 'reinterpret_cast': 'unsigned int'에서 더 큰 'T *'(으)로의 변환입니다.
+          with
+          [
+              T=CharacterData
+          ]
   JWObjectPool.vcxproj -> C:\Users\James Park\Desktop\Study\JWObjectPool\x64\Debug\JWObjectPool.exe
