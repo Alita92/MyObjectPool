@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
+#include <unordered_set>
 #define _CRTDBG_MAP_ALLOC
 #include <cstdlib>
 #include <crtdbg.h>
@@ -16,11 +17,12 @@ template<typename T>
 class JWObjectPool
 {
 private:
-    std::stack<T*> _block_list;     // 풀의 블록마다의 주소값을 저장해 논 스택
+    stack<T*> _block_list;     // 풀의 블록마다의 주소값을 저장해 논 스택
     int _block_size;                // 메모리 블록 하나의 지정된 사이즈
     vector<void*> _mem_list;       // 메모리 요구치가 기존 설정한 사이즈보다 많아 질 시 추가 malloc 위한 배열
     int _cur_usage_index;
-    
+    unordered_set<T*> _unreturned_objects;
+
 public:
     JWObjectPool(int size = 100)
     {
@@ -33,14 +35,20 @@ public:
     // 소멸자 단계에서는 모든 풀을 탐색하여 동적 할당 메모리를 소멸 시킵니다.
     ~JWObjectPool()
     {
-        if (_cur_usage_index != 0)
+        //if (_cur_usage_index != 0)
+        //{
+        //    for (int index = 0; index < _cur_usage_index; ++index)
+        //    {
+        //        unsigned int tmp_address = reinterpret_cast<unsigned int>(_mem_list[0]) + sizeof(T) * index;
+        //        T* delete_object = reinterpret_cast<T*>(tmp_address);
+        //        delete_object->~T();
+        //    }
+        //}
+
+        if (_unreturned_objects.empty() == false)
         {
-            for (int index = 0; index < _cur_usage_index; ++index)
-            {
-                unsigned int tmp_address = reinterpret_cast<unsigned int>(_mem_list[0]) + sizeof(T) * index;
-                T* delete_object = reinterpret_cast<T*>(tmp_address);
-                delete_object->~T();
-            }
+            printf("풀에 리턴되지 않은 오브젝트가 %d 개 있습니다...", _unreturned_objects.size());
+            
         }
 
         for (auto mem : _mem_list)
@@ -70,16 +78,14 @@ public:
         if (_block_list.empty())
         {
             printf("기존 메모리 블록 할당량을 모두 소비해 새 메모리 블록을 만듭니다!\n");
-            MakeBlock();
+            MakeBlock();        
         }
 
         T* return_pointer = _block_list.top();
         _block_list.pop();
-
-        T* return_pointer_placement = new (&return_pointer) T;
-        // PLACEMENT NEW
-
-        ++_cur_usage_index;
+                
+        T* return_pointer_placement = new (return_pointer) T;
+        _unreturned_objects.insert(return_pointer_placement);
         return return_pointer_placement;
     }
 
@@ -89,6 +95,7 @@ public:
         object->~T();
         _block_list.push(object);
         --_cur_usage_index;
+        _unreturned_objects.erase(object);
     }
 };
 
@@ -98,8 +105,7 @@ class CharacterData
 public:
     CharacterData() 
     {
-        _level = 1;
-        _type = 'A';
+        int a = 0;
     }
     ~CharacterData()
     {
